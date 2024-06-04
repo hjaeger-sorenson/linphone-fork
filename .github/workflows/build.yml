@@ -74,7 +74,10 @@ jobs:
       
       - name: Install NSIS
         run: choco install nsis
-
+      
+      - name: Install CMake
+        uses: jwlawson/actions-setup-cmake@v2
+        
       - name: Add PATH vars
         run: |
           "${{ github.workspace }}\Qt\5.15.2\msvc2019_64\bin;${{ github.workspace }}\msys64\mingw64\bin;${{ github.workspace }}\msys64;${{ github.workspace }}\msys64\usr\bin;${{ github.workspace }}\utils\nasm;" | Out-File -FilePath $env:GITHUB_PATH -Append
