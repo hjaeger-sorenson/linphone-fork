@@ -13,14 +13,14 @@ jobs:
           NINJA_LOCATION: C:/msys64/mingw64/bin/ninja.exe
           MESON_LOCATION: C:/hostedtoolcache/windows/Python/3.9.13/x64/Scripts/meson.exe
         steps:
-        - name: Install Yasm
-          run: |
-            cd "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools"
-            curl http://www.tortall.net/projects/yasm/releases/yasm-1.3.0-win32.exe -o yasm.exe
+        # - name: Install Yasm
+        #   run: |
+        #     cd "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools"
+        #     curl http://www.tortall.net/projects/yasm/releases/yasm-1.3.0-win32.exe -o yasm.exe
 
-        - name: Add Path Vars
-          run: |
-            echo "${{ github.workspace }}\Qt\5.15.2\msvc2019_64\bin;${{ github.workspace }}\msys64\mingw64\bin;${{ github.workspace }}\msys64;${{ github.workspace }}\msys64\usr\bin;${{ github.workspace }}\utils\nasm;${{ github.workspace }}\utils\yasm;" | Out-File -FilePath $env:GITHUB_PATH -Append
+        # - name: Add Path Vars
+        #   run: |
+        #     echo "${{ github.workspace }}\Qt\5.15.2\msvc2019_64\bin;${{ github.workspace }}\msys64\mingw64\bin;${{ github.workspace }}\msys64;${{ github.workspace }}\msys64\usr\bin;${{ github.workspace }}\utils\nasm;${{ github.workspace }}\utils\yasm;" | Out-File -FilePath $env:GITHUB_PATH -Append
         
         - name: Install Python Deps
           run: |
@@ -30,4 +30,4 @@ jobs:
           shell: cmd
           run: |
             cd ${{github.workspace}}
-            python -m find_meson
+            python find_meson.py
