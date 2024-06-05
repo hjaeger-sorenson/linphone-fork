@@ -21,7 +21,8 @@ jobs:
         # - name: Add Path Vars
         #   run: |
         #     echo "${{ github.workspace }}\Qt\5.15.2\msvc2019_64\bin;${{ github.workspace }}\msys64\mingw64\bin;${{ github.workspace }}\msys64;${{ github.workspace }}\msys64\usr\bin;${{ github.workspace }}\utils\nasm;${{ github.workspace }}\utils\yasm;" | Out-File -FilePath $env:GITHUB_PATH -Append
-        
+        - name: Checkout Sorenson Linphone Repo
+          uses: actions/checkout@v4
         - name: Install Python Deps
           run: |
             pip3 install meson six pystache
