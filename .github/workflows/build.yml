@@ -10,12 +10,9 @@ jobs:
       Qt5_DIR: ${{ github.workspace }}\Qt\5.15.2\msvc2019_64\lib\cmake\Qt5
       LIBLINPHONE_VERSION: 5.3.0
       GIT_EXECUTABLE: C:\Program Files\Git\bin\git.exe
-      NINJA_LOCATION: C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe
-      MESON_LOCATION: C:/hostedtoolcache/windows/Python/3.12.3/x64/Scripts/meson.exe
+      NINJA_LOCATION: C:/msys64/mingw64/bin/ninja.exe
+      MESON_LOCATION: C:/hostedtoolcache/windows/Python/3.9.13/x64/Scripts/meson.exe
     steps:
-      - name: Disable Line Ending Auto Conversion
-        run: git config --global core.autocrlf input
-
       - name: Checkout Sorenson Linphone Repo
         uses: actions/checkout@v4
         with:
@@ -43,44 +40,31 @@ jobs:
             base-devel 
             mingw-w64-i686-toolchain
 
-      - name: Install Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12.3'
-
       - name: Install NASM
         uses: ilammy/setup-nasm@v1
         with:
           destination: ${{ github.workspace }}\utils\nasm
 
-      - name: Install YASM
-        run: |
-          cd "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools"
+       - name: Install YASM
+         run: |
+          mkdir ${{github.workspace}}\utils\yasm
+          cd ${{github.workspace}}\utils\yasm
           curl http://www.tortall.net/projects/yasm/releases/yasm-1.3.0-win32.exe -o yasm.exe
 
       - name: Install Doxygen
         uses: ssciwr/doxygen-install@v1
         with:
             version: "1.9.8"
-            
-      - name: Install Perl
-        uses: shogo82148/actions-setup-perl@v1
-        with:
-          perl-version: "5.38"
-          distribution: strawberry
           
       - name: Install 7-Zip
         uses: milliewalky/setup-7-zip@v1
-      
+
       - name: Install NSIS
         run: choco install nsis
-      
-      - name: Install CMake
-        uses: jwlawson/actions-setup-cmake@v2
-        
+
       - name: Add PATH vars
         run: |
-          "${{ github.workspace }}\Qt\5.15.2\msvc2019_64\bin;${{ github.workspace }}\msys64\mingw64\bin;${{ github.workspace }}\msys64;${{ github.workspace }}\msys64\usr\bin;${{ github.workspace }}\utils\nasm;" | Out-File -FilePath $env:GITHUB_PATH -Append
+          echo "${{ github.workspace }}\Qt\5.15.2\msvc2019_64\bin;${{ github.workspace }}\msys64\mingw64\bin;${{ github.workspace }}\msys64;${{ github.workspace }}\msys64\usr\bin;${{ github.workspace }}\utils\nasm;${{ github.workspace }}\utils\yasm;" | Out-File -FilePath $env:GITHUB_PATH -Append
           
       - name: CMD
         uses: ilammy/msvc-dev-cmd@v1
@@ -91,6 +75,7 @@ jobs:
           call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
           pip3 install pystache six meson    
 
+      # remove extra initialization
       - name: Initialize VS Cmd Prompt
         shell: cmd
         run: |
