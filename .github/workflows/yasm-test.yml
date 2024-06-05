@@ -28,4 +28,4 @@ jobs:
 
         - name: Show locations
           run: |
-            pip3 show meson
+            python -m find_meson

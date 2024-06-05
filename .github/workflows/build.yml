@@ -45,8 +45,8 @@ jobs:
         with:
           destination: ${{ github.workspace }}\utils\nasm
 
-       - name: Install YASM
-         run: |
+      - name: Install YASM
+        run: |
           mkdir ${{github.workspace}}\utils\yasm
           cd ${{github.workspace}}\utils\yasm
           curl http://www.tortall.net/projects/yasm/releases/yasm-1.3.0-win32.exe -o yasm.exe
