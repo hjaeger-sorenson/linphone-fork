@@ -27,5 +27,7 @@ jobs:
             pip3 install meson six pystache
 
         - name: Show locations
+          shell: cmd
           run: |
+            cd ${{github.workspace}}
             python -m find_meson
